@@ -4,7 +4,7 @@ Instructions for how to install the GULD Wallet/Guld Games App
 
 ## Installation
 
-###Pre-requirements
+### Pre-requirements
 
 - python 2.7 or newer
 - chrome 66 or newer
