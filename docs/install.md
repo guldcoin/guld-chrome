@@ -15,7 +15,10 @@ Currently, these extensions run only on the following operating systems:
 In addition, you'll need:
 
 - Python 2.7 or later ([download](https://www.python.org/downloads/))
-- Google Chrome 66 or later ([download](https://www.chrome.com/))
+- Chromium
+ ([windows](https://chromium.woolyss.com/download/#windows))
+ ([mac](https://chromium.woolyss.com/download/#mac))
+ ([linux](https://chromium.woolyss.com/download/#linux))
 - an Internet connection
 
 <p style="color:red"><b>NEED HELP HERE!</b> What are the minimum Python and Chrome versions we should be requiring?</p>
@@ -65,12 +68,10 @@ To install the ledger-native bindings on macOS or Linux:
     ```bash
     cd ledger-native
 
-    ./install_host.sh
+    bash install_host.sh
     ```
 
-    By default, the host is installed _only_ for the user who runs the script. To install it for all users on the system, run it with admin privileges (i.e. `sudo ./install_host.sh`).
-
-1. To uninstall the host, run `./uninstall_host.sh` (or `sudo ./uninstall_host.sh`, if you installed it with admin privileges).
+1. To uninstall the host, run `bash uninstall_host.sh`.
 
 #### On Windows
 
