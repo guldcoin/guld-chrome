@@ -10,11 +10,7 @@ Currently, these extensions run only on the following operating systems:
 - Linux (kernel xxx or later, Ubuntu/Mint/gentoo recommended)
 - Windows (7 or later)
 
-<span style="color:red">
-
-<b>NEED HELP HERE!</b> What are the minimum OS versions we should be requiring?
-
-</span>
+<p style="color:red"><b>NEED HELP HERE!</b> What are the minimum OS versions we should be requiring?</p>
 
 In addition, you'll need:
 
@@ -22,11 +18,7 @@ In addition, you'll need:
 - Google Chrome 66 or later ([download](https://www.chrome.com/))
 - an Internet connection
 
-<span style="color:red">
-
-<b>NEED HELP HERE!</b> What are the minimum Python and Chrome versions we should be requiring?
-
-</span>
+<p style="color:red"><b>NEED HELP HERE!</b> What are the minimum Python and Chrome versions we should be requiring?</p>
 
 ## Installation
 
@@ -54,13 +46,7 @@ The [ledger download page](https://www.ledger-cli.org/download.html) has links t
 
 The [ledger download page](https://www.ledger-cli.org/download.html) has a link to a third-party binary download for Windows. Download and unzip `ledger_3.1.1_win_bin.zip`.
 
-<span style="color:red">
-
-<b>NEED WINDOWS HELP HERE!</b>
-
-I'm not sure where the files should go... The binary unzips to a bunch of DLLs and a single executable. Seems like it ought to go into a folder of its own somewhere, but then we need to add instructions on adding that folder to the Windows path so the extension can find it.
-
-</span>
+<p style="color:red"><b>NEED WINDOWS HELP HERE!</b> I'm not sure where the files should go... The binary unzips to a bunch of DLLs and a single executable. Seems like it ought to go into a folder of its own somewhere, but then we need to add instructions on adding that folder to the Windows path so the extension can find it.</p>
 
 ### Installing the ledger-native bindings
 
@@ -98,21 +84,21 @@ To install the ledger-native bindings on Windows:
 
 1. This script installs the native messaging host for the current user, by creating a registry key called `HKEY_CURRENT_USER\SOFTWARE\Google\Chrome\NativeMessagingHosts\com.guld.ledger` and setting its value to the full path to `com.guld.ledger-win.json`. If you want to install the native messaging host for all users, change `HKEY_CURRENT_USER` to `HKEY_LOCAL_MACHINE`.
 
-<span style="color:red">
-
-<b>NEED WINDOWS HELP HERE!</b> Can someone please verify that this registry modification is correct for Windows 7 through 10?
-
-</span>
+<p style="color:red"><b>NEED WINDOWS HELP HERE!</b> Can someone please verify that this registry modification is correct for Windows 7 through 10?</p>
 
 ### Install the Chrome extension
 
+Forthcoming...
+
 #### Extension Setup Steps
+
+Forthcoming...
 
 Setup steps for each chrome app/extension
 
-
 #### Guld Wallet
 
+Forthcoming...
 
 #### Guld Games
-
+Forthcoming...
