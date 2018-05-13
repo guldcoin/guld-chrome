@@ -15,11 +15,12 @@ Currently, these extensions run only on the following operating systems:
 In addition, you'll need:
 
 - Python 2.7 or later ([download](https://www.python.org/downloads))
-- Chrome or Chromium
- ([chrome](https://www.google.com/chrome))
- ([chromium windows](https://chromium.woolyss.com/download/#windows))
- ([chromium mac](https://chromium.woolyss.com/download/#mac))
- ([chromium linux](https://chromium.woolyss.com/download/#linux))
+- Chrome
+([chrome](https://www.google.com/chrome))
+-  or Chromium  
+ ([windows](https://chromium.woolyss.com/download/#windows))
+ ([mac](https://chromium.woolyss.com/download/#mac))
+ ([linux](https://chromium.woolyss.com/download/#linux))
 - an Internet connection
 
 <p style="color:red"><b>NEED HELP HERE!</b> What are the minimum Python and Chrome versions we should be requiring?</p>
