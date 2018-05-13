@@ -7,7 +7,7 @@ This page describes how to install the GULD Wallet/Guld Games App.
 Currently, these extensions run only on the following operating systems:
 
 - macOS (10.12.x or later)
-- Linux (kernel xxx or later, Ubuntu/Mint/gentoo recommended)
+- Linux (kernel xxx or later, Ubuntu/Mint/Gentoo recommended)
 - Windows (7 or later)
 
 <p style="color:red"><b>NEED HELP HERE!</b> What are the minimum OS versions we should be requiring?</p>
