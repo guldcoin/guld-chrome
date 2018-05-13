@@ -69,10 +69,10 @@ To install the ledger-native bindings on macOS or Linux:
     ```bash
     cd ledger-native
 
-    bash install_host.sh
+    ./install_host.sh
     ```
 
-1. To uninstall the host, run `bash uninstall_host.sh`.
+1. To uninstall the host, run `./uninstall_host.sh`.
 
 #### On Windows
 
@@ -85,8 +85,6 @@ To install the ledger-native bindings on Windows:
 1. Double-click the `install_host.bat` script to run it.
 
 1. This script installs the native messaging host for the current user, by creating a registry key called `HKEY_CURRENT_USER\SOFTWARE\Google\Chrome\NativeMessagingHosts\com.guld.ledger` and setting its value to the full path to `com.guld.ledger-win.json`.
-
-<p style="color:red"><b>NEED WINDOWS HELP HERE!</b> Can someone please verify that this registry modification is correct for Windows 7 through 10?</p>
 
 ### Install the Chrome extension
 
@@ -103,4 +101,5 @@ Setup steps for each chrome app/extension
 Forthcoming...
 
 #### Guld Games
+
 Forthcoming...
