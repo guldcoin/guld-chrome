@@ -1,12 +1,5 @@
 /* global BrowserFS:false Event:false Blocktree:false chrome:false openpgp:false localStorage:false git:false GitHub:false fetch:false */
-const config = {
-  fs: 'LocalStorage',
-  options: {
-    '/tmp': {
-      fs: 'InMemory'
-    }
-  }
-}
+
 const knownApps = ['fjnccnnmidoffkjhcnnahfeclbgoaooo']
 var fs = false
 var blocktree = false
@@ -25,8 +18,50 @@ var fullname = ''
 var keyring = new openpgp.Keyring()
 window.Ledger = Ledger
 
+//var worker = new Worker('js/fs.js')
+//function tryToGetFS () {
+//  return Promise.race([
+//    new Promise((resolve, reject) => {
+//      BrowserFS.configure({
+//        fs: 'WorkerFS',
+//        options: {
+//          worker: worker
+//        }
+//      }, err => {
+//        if (err) {
+//          return tryToGetFS().then(resolve).catch(reject)
+//        } else {
+//          fs = BrowserFS.BFSRequire('fs')
+//          return resolve(fs)
+//        }
+//      })
+//    }),
+//    new Promise(resolve => {
+//      setTimeout(resolve, 1000)
+//    })
+//  ]).then(() => {
+//    if (!fs) return tryToGetFS()
+//    else {
+//      return fs
+//      BrowserFS.FileSystem.WorkerFS.attachRemoteListener(worker)
+//    }
+//  })
+//}
+
+//tryToGetFS().then(getGuldID).then(bootstrapBlocktree).catch(bootstrapBlocktree)
+
+// load the isomorphic-git openpgp plugin
+//git.use(GitOpenPGP)
+
 // Load the filesystem and blocktree
-BrowserFS.configure(config, err => {
+BrowserFS.configure({
+  fs: 'LocalStorage',
+  options: {
+    '/tmp': {
+      fs: 'InMemory'
+    }
+  }
+}, err => {
   if (err) throw err
   fs = BrowserFS.BFSRequire('fs')
   getGuldID().then(bootstrapBlocktree).catch(bootstrapBlocktree)
@@ -34,7 +69,7 @@ BrowserFS.configure(config, err => {
 
 // initialize the blocktree on first install
 chrome.runtime.onInstalled.addListener(e => {
-  setTimeout(initBlocktree, 1000)
+  setTimeout(bootstrapBlocktree, 1000)
 })
 
 // set uninitialized on uninstall, and clear localstorage... redundant?
@@ -65,15 +100,18 @@ chrome.runtime.onConnectExternal.addListener(function (port) {
           keyring.privateKeys.getForId(guldfpr).primaryKey &&
           keyring.privateKeys.getForId(guldfpr).primaryKey.isDecrypted)
           unlocked = true
-        port.postMessage({
-          'cmd': 'gotuser',
-          'data': {
-            'name': guldname,
-            'email': guldmail,
-            'fpr': guldfpr,
-            'ghavatar': ghavatar,
-            'unlocked': unlocked
-          }
+        isRegistered(guldname).then(registered => {
+          port.postMessage({
+            'cmd': 'gotuser',
+            'data': {
+              'name': guldname,
+              'email': guldmail,
+              'fpr': guldfpr,
+              'ghavatar': ghavatar,
+              'unlocked': unlocked,
+              'registered': registered
+            }
+          })
         })
         break
       case 'balance':
@@ -137,6 +175,7 @@ chrome.runtime.onConnectExternal.addListener(function (port) {
 // Guld helpers
 
 function bootstrapBlocktree (obj) {
+  if (!fs) return
   blocktree = new Blocktree(fs, guldname)
   window.dispatchEvent(new Event('blocktree-avail'))
   fs.readdir(`/BLOCKTREE/${guldname}/ledger/GULD`, (err, list) => {
@@ -153,6 +192,7 @@ function bootstrapBlocktree (obj) {
 
 function cloneGG () {
   var p = `/BLOCKTREE/${guldname}/ledger/GG`
+  console.log(`cloning ${p}`)
   return git.clone({
     fs: fs,
     dir: p,
@@ -175,6 +215,7 @@ function initBlocktree () {
         var start = Date.now()
         console.log(`starting blocktree init @ ${start}`) // eslint-disable-line no-console
         blocktree.initFS(guldname, 'guldcoin').then(cloneGG).then(() => {
+            console.log(`${(Date.now() - start) / 1000} seconds to init fs and clone gg`) // eslint-disable-line no-console
           // also cache ledger and balances
           getLedger().then(getBalance()).then(() => {
             console.log(`${(Date.now() - start) / 1000} seconds to init blocktree and ledger`) // eslint-disable-line no-console
@@ -335,6 +376,160 @@ function getBalance(gname, useCache) {
   }
 }
 
+function isRegistered(gname) {
+  gname = gname || guldname
+  return getBalance('guld').then(bal => {
+    return (
+      bal &&
+      bal.Income &&
+      bal.Income.register &&
+      bal.Income.register.individual &&
+      bal.Income.register.individual[gname] &&
+      bal.Income.register.individual[gname].__bal &&
+      bal.Income.register.individual[gname].__bal.GULD &&
+      bal.Income.register.individual[gname].__bal.GULD.value &&
+      bal.Income.register.individual[gname].__bal.GULD.value.equals(new Decimal(-0.1))
+    )
+  })
+}
+
+function updateLedger (tx) {
+  return new Promise((resolve, reject) => {
+    getLedger().then(ledger => {
+      var newJournal = `${ledger.options.raw}
+${tx}
+`
+      chrome.storage.local.set({'journal': newJournal}, () => {
+        if (chrome.runtime.lastError) reject(chrome.runtime.lastError)
+        else {
+          getBalance(guldname, false).then(bal => {
+            balance = bal
+            resolve()
+          }).catch(reject)
+        }
+      })
+    })
+  })
+}
+
+function gitCommit (partial, time) {
+  return git.commit({
+    fs: fs,
+    dir: `/BLOCKTREE/${guldname}/${partial}/`,
+    gitdir: `/BLOCKTREE/${guldname}/${partial}/.git`,
+    message: `guld app transaction`,
+    author: {
+      name: fullname,
+      email: guldmail,
+      date: new Date(time * 1000),
+      timestamp: time
+    }
+  })
+}
+
+function gitPull (partial) {
+  return git.pull({
+    fs: fs,
+    dir: `/BLOCKTREE/${guldname}/${partial}/`,
+    gitdir: `/BLOCKTREE/${guldname}/${partial}/.git`,
+    ref: 'master',
+    authUsername: ghoauth,
+    authPassword: ghoauth
+  })
+}
+
+function gitPush (partial) {
+  return git.push({
+    fs: fs,
+    dir: `/BLOCKTREE/${guldname}/${partial}/`,
+    gitdir: `/BLOCKTREE/${guldname}/${partial}/.git`,
+    remote: 'origin',
+    ref: 'master',
+    authUsername: ghoauth,
+    authPassword: ghoauth
+  })
+}
+
+function gitSign (partial) {
+  return git.sign({
+    fs: fs,
+    dir: `/BLOCKTREE/${guldname}/${partial}/`,
+    gitdir: `/BLOCKTREE/${guldname}/${partial}/.git`,
+    openpgp: openpgp,
+    privateKeys: keyring.privateKeys.getForId(guldfpr)
+  })
+}
+
+function gitAdd (partial, filepath) {
+  return git.add({
+    fs: fs,
+    dir: `/BLOCKTREE/${guldname}/${partial}/`,
+    gitdir: `/BLOCKTREE/${guldname}/${partial}/.git`,
+    filepath: filepath
+  })
+}
+
+function writeTx (tx, gname, comm, sender, time) {
+  gname = gname || guldname
+  comm = comm || commodity
+  sender = sender || gname
+  time = time || Transaction.getTimestamp(tx)
+  var gitDir = `/BLOCKTREE/${gname}/ledger/${comm}/.git`
+  var repoDir = `/BLOCKTREE/${gname}/ledger/${comm}/${sender}/`
+  return new Promise((resolve, reject) => {
+    fs.mkdir(repoDir, err => {
+      fs.writeFile(`${repoDir}${time}.dat`, tx.raw, err => {
+        console.log(`wrote ${repoDir}${time}.dat`)
+        if (err) reject(err)
+        else {
+          gitAdd(`ledger/${comm}`, `${sender}/${time}.dat`).then(() => {
+            console.log(`${(Date.now() - time * 1000) / 1000} seconds to create and add tx`) // eslint-disable-line no-console
+            gitCommit(`ledger/${comm}`, time).then(hash => {
+              console.log(`${(Date.now() - time * 1000) / 1000} seconds to create unsigned commit ${hash}`) // eslint-disable-line no-console
+              gitSign(`ledger/${comm}`).then(objid => {
+                console.log(`${(Date.now() - time * 1000) / 1000} seconds to sign commit ${objid}`) // eslint-disable-line no-console
+                updateLedger(tx.raw).then(resolve).catch(reject)
+                gitPush(`ledger/${comm}`).then(results => {
+                  if (results && results.ok)
+                    console.log(`${(Date.now() - time * 1000) / 1000} seconds to push commit ${objid}`) // eslint-disable-line no-console
+
+                  else reject(new Error(results.errors))
+                }).catch(reject)
+              }).catch(reject)
+            }).catch(reject)
+          }).catch(reject)
+        }
+      })
+    })
+  })
+}
+
+function redirectAllRemotes () {
+  return Promise.all(['ledger/GULD', 'ledger/GG', 'keys/pgp'].map(partial => {
+    return redirectRemote(`/BLOCKTREE/${guldname}/${partial}/.git/config`)
+  }))
+}
+
+function redirectRemote (dir) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(dir, 'utf-8', (err, cfg) => {
+      if (err) {
+        console.error(JSON.stringify(err))
+        reject(err)
+      }
+      else {
+        fs.writeFile(dir, cfg.replace('guldcoin', ghname), err => {
+          if (err) {
+            console.error(err)
+            reject(err)
+          }
+          else resolve()
+        })
+      }
+    })
+  })
+}
+
 // Github helpers
 
 function initGitHub () { // eslint-disable-line no-unused-vars
@@ -404,6 +599,14 @@ function ghOAUTH () { // eslint-disable-line no-unused-vars
     } catch (er) {
       reject(er)
     }
+  })
+}
+
+function createPR (org, repo) {
+  return gh.getRepo(org, repo).createPullRequest({
+    title: 'guld app created tx PR',
+    head: `${guldname}:master`,
+    base: 'master'
   })
 }
 

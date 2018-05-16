@@ -3,15 +3,10 @@
 /* global b:false loadBackground:false logout:false */
 
 function loadRegister () { // eslint-disable-line no-unused-vars
-  setupPage()
-  senderDiv = document.getElementById('guld_transaction_sender')
-  recDiv = document.getElementById('guld_transaction_recipient')
-  amtDiv = document.getElementById('guld_spend_amount')
-  var formEl = document.getElementById('guld_transfer_form')
-  senderDiv.value = b.guldname
-
-  detectCommodity()
-  showBalances(b.guldname, commodity)
+  var regTypeDiv = document.getElementById('guld-registration-type')
+  var nameDiv = document.getElementById('guld-registration-name')
+  amtDiv = document.getElementById('guld-spend-amount')
+  var formEl = document.getElementById('registration-form')
 
   b.getBalance().then(bal => {
     if (bal && bal.Assets && bal.Assets.__bal && bal.Assets.__bal[commodity]) {
@@ -20,9 +15,20 @@ function loadRegister () { // eslint-disable-line no-unused-vars
     }
   })
 
-  senderDiv.addEventListener('focusout', validateSender)
-  recDiv.addEventListener('focusout', validateRecipient)
-  amtDiv.addEventListener('change', validateSpendAmount)
+  b.isRegistered(b.guldname).then(registered => {
+    if (registered) regTypeDiv.value = 'group'
+    else {
+      regTypeDiv.value = 'individual'
+      b.blocktree.getPrice('GULD', '$').then(price => {
+        setError(`Everyone has to register on the guld group before being able to send or contract. The cost is currently 0.1 GULD or ~$${price.value.mul(0.1)}. Please click 'register' to continue.`)
+        amtDiv.value = 0.1
+        amtDiv.disabled = true
+        nameDiv.value = b.guldname
+        nameDiv.disabled = true
+      })
+    }
+  })
+
   formEl.addEventListener('submit', e => {
     e.preventDefault()
     if (validateSpendAmount()) {
@@ -31,57 +37,7 @@ function loadRegister () { // eslint-disable-line no-unused-vars
           validateRecipient().then(valid => {
             if (valid) {
               var time = Math.trunc(Date.now() / 1000)
-              var tx = Transfer.create(senderDiv.value, recDiv.value, amtDiv.value, commodity, time)
-              var repoDir = `/BLOCKTREE/${b.guldname}/ledger/${commodity}/${senderDiv.value}/`
-              b.fs.mkdir(repoDir, err => {
-                var repo = {
-                  fs: b.fs,
-                  dir: repoDir,
-                  gitdir: `${repoDir}.git`
-                }
-                b.fs.writeFile(`${repoDir}${time}.dat`, tx.raw, err => {
-                  if (err) setError(err)
-                  else {
-                    var addRepo = Object.assign({filepath: `${time}.dat`}, repo)
-                    b.git.add(addRepo).then(() => {
-                      // TODO commit and sign
-                      /*
-                      var commitRepo = Object.assign( 
-                        {
-                          message: `transfer`,
-                          author: {
-                            name: b.fullname,
-                            email: b.guldmail,
-                            date: new Date(time * 1000),
-                            timestamp: time
-                          }
-                        },
-                        repo
-                      )
-                      console.log(commitRepo)
-                      b.git.commit(commitRepo).then(hash => {
-                        console.log(`created commit ${hash}`)
-                      }).catch(console.error)
-                      */
-                      b.getLedger().then(ledger => {
-                        var newJournal = `${ledger.options.raw}
-
-${tx.raw}
-`
-                        chrome.storage.local.set({'journal': newJournal}, () => {
-                          if (chrome.runtime.lastError) setError(chrome.runtime.lastError)
-                          else {
-                            b.getBalance(b.guldname, false).then(bal => {
-                              balance = bal
-                              window.location = `chrome-extension://${chrome.runtime.id}/main.html`
-                            })
-                          }
-                        })
-                      })
-                    })
-                  }
-                })
-              })
+              var tx = Register.create(nameDiv.value, regTypeDiv.value, (new Decimal(10)).mul(amtDiv.value).toNumber(), commodity, b.guldname, time)
             }
           })
         }
