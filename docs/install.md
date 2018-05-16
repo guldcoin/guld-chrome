@@ -7,15 +7,20 @@ This page describes how to install the GULD Wallet/Guld Games App.
 Currently, these extensions run only on the following operating systems:
 
 - macOS (10.12.x or later)
-- Linux (kernel xxx or later, Ubuntu/Mint/gentoo recommended)
+- Linux (kernel xxx or later, Ubuntu/Mint/Gentoo recommended)
 - Windows (7 or later)
 
 <p style="color:red"><b>NEED HELP HERE!</b> What are the minimum OS versions we should be requiring?</p>
 
 In addition, you'll need:
 
-- Python 2.7 or later ([download](https://www.python.org/downloads/))
-- Google Chrome 66 or later ([download](https://www.chrome.com/))
+- Python 2.7 or later ([download](https://www.python.org/downloads))
+- Chrome
+([chrome](https://www.google.com/chrome))
+-  or Chromium  
+ ([windows](https://chromium.woolyss.com/download/#windows))
+ ([mac](https://chromium.woolyss.com/download/#mac))
+ ([linux](https://chromium.woolyss.com/download/#linux))
 - an Internet connection
 
 <p style="color:red"><b>NEED HELP HERE!</b> What are the minimum Python and Chrome versions we should be requiring?</p>
@@ -68,9 +73,7 @@ To install the ledger-native bindings on macOS or Linux:
     ./install_host.sh
     ```
 
-    By default, the host is installed _only_ for the user who runs the script. To install it for all users on the system, run it with admin privileges (i.e. `sudo ./install_host.sh`).
-
-1. To uninstall the host, run `./uninstall_host.sh` (or `sudo ./uninstall_host.sh`, if you installed it with admin privileges).
+1. To uninstall the host, run `./uninstall_host.sh`.
 
 #### On Windows
 
@@ -82,9 +85,7 @@ To install the ledger-native bindings on Windows:
 
 1. Double-click the `install_host.bat` script to run it.
 
-1. This script installs the native messaging host for the current user, by creating a registry key called `HKEY_CURRENT_USER\SOFTWARE\Google\Chrome\NativeMessagingHosts\com.guld.ledger` and setting its value to the full path to `com.guld.ledger-win.json`. If you want to install the native messaging host for all users, change `HKEY_CURRENT_USER` to `HKEY_LOCAL_MACHINE`.
-
-<p style="color:red"><b>NEED WINDOWS HELP HERE!</b> Can someone please verify that this registry modification is correct for Windows 7 through 10?(works in 10 as of 5/12, confirming 8+7)</p>
+1. This script installs the native messaging host for the current user, by creating a registry key called `HKEY_CURRENT_USER\SOFTWARE\Google\Chrome\NativeMessagingHosts\com.guld.ledger` and setting its value to the full path to `com.guld.ledger-win.json`.
 
 ### Install the Chrome extension
 
@@ -101,4 +102,5 @@ Setup steps for each chrome app/extension
 Forthcoming...
 
 #### Guld Games
+
 Forthcoming...
