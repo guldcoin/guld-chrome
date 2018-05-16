@@ -4,17 +4,17 @@ The files that make up this Chrome extension are organized into several folders:
 
 ## Root-level files
 
-`.eslintrc.json` sets up behaviours for the [`eslint`]() package, useful for development. **omit from the distribution??**
+`.eslintrc.json` sets up behaviours for the [`eslint`](https://eslint.org/) JavaScript linter. **omit from the distribution??**
 
 `.gitignore` lists file names and patterns that Git should silently omit from its operations. Refer to the [Git documentation](https://www.git-scm.com/docs/gitignore) for details.
 
-`LICENSE` contains a copy of the extension's MIT-style software license.
+`LICENSE` is the extension's MIT-style software license.
 
 `manifest.json` provides information about the extension to the Chrome browser. Refer to the [Chrome developer docs](https://developer.chrome.com/extensions/manifest) for more details.
 
-`package-lock.json` records exactly which NPM package versions used to create the current distribution. Refer to the [NPM developer docs](https://docs.npmjs.com/files/package-lock.json) for details.
-
 `package.json` is the general NPM package manifest. Refer to the [NPM developer docs](https://docs.npmjs.com/files/package.json) for details.
+
+`package-lock.json` records exactly which NPM package versions used to create the current distribution. Refer to the [NPM developer docs](https://docs.npmjs.com/files/package-lock.json) for details.
 
 `README.md` is the overview document for the project.
 
@@ -40,26 +40,26 @@ The code that directly defines the extension's functionality is in the `/js` fol
 
 `main.js` defines the program logic, along with `util.js`. The other files in this folder provide supporting functionality.
 
-`background.js`
+`background.js` handles tasks including blocktree, PGP, GitHub, and browser-filesystem operations, and exposes the extension's API for use by other extensions.
 
-`burn.js`
+`burn.js` provides functionality to burn GULD. **Not currently implemented**
 
-`convert.js`
+`convert.js` provides functionality to convert between currencies. **Not currently implemented**
 
-`deposit.js`
+`deposit.js` provides functionality to deposit into the wallet. **Not currently implemented**
 
-`fs.js`
+`fs.js` configures the browser-based filesystem.
 
-`grant.js`
+`grant.js` provides functionality to grant GG. **Not currently implemented**
 
-`options.js`
+`options.js` ...
 
-`receiveBTC.js`
+`receiveBTC.js` ...
 
-`register.js`
+`register.js` ...
 
-`send.js`
+`send.js` ...
 
 ## `/js/vendor` files
 
-Contains supporting libraries.
+This folder contains supporting libraries.
