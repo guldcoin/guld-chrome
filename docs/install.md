@@ -35,7 +35,7 @@ The first package you need to install is `ledger-cli`, the command-line based ac
 
 #### On macOS
 
-Using the [Brew](https://docs.brew.sh/Installation) package manager, run the following command from a Terminal window:
+Using the [Brew](https://brew.sh) package manager, run the following command from a Terminal window:
 
 ```bash
 brew install ledger
