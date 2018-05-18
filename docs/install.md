@@ -99,14 +99,46 @@ To install the extension directly from this Github repository, either download o
 
 #### Extension Setup Steps
 
-Forthcoming...
+> **This section is incomplete...**
 
-Setup steps for each chrome app/extension
+Once the extension has finished its initial setup, the "WAIT" overlay on its icon will disappear. Click the icon to get started!
 
-#### Guld Wallet
+#### Setting up Guld Wallet
 
-Forthcoming...
+> **This section is incomplete...**
 
-#### Guld Games
+Click the Guld Wallet icon on the Chrome toolbar to open the interface in a new tab. You'll be prompted to enter your Github credentials.
 
-Forthcoming...
+On the welcome screen, you can either **generate** a Guld identity, or **import** an existing identity. Identities are tied to PGP keys, so this step is actually generating a (or importing an existing, in the case of existing Guld users) PGP key.
+
+To **generate a new Guld identity** and PGP key:
+
+1. Select the "generate" radio button.
+
+1. Choose a Guld username.
+
+    > **TODO** Need guidelines on usernames.
+
+1. Optionally, enter your name.
+
+1. Enter your email address.
+
+    Note that this email address will be publicly available in the ledger. Don't use an address you don't want to be made public!
+
+1. Enter a strong passphrase for the new PGP key, and confirm it.
+
+    Keep your passphrase stored securely! There is no way to recover a lost passphrase.
+
+1. Click **Create** to create your new Guld identity and PGP key.
+
+To **import an existing Guld identity** and PGP key:
+
+> **TODO** it looks like the UI for this one is broken right now. Choosing import doesn't change the UI at all.
+
+1. Select the "import" radio button.
+
+1. ...
+
+#### Setting up Guld Games
+
+> **This section is forthcoming...**
