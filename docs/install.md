@@ -15,12 +15,8 @@ Currently, these extensions run only on the following operating systems:
 In addition, you'll need:
 
 - Python 2.7 or later ([download](https://www.python.org/downloads))
-- Chrome
-([chrome](https://www.google.com/chrome))
--  or Chromium  
- ([windows](https://chromium.woolyss.com/download/#windows))
- ([mac](https://chromium.woolyss.com/download/#mac))
- ([linux](https://chromium.woolyss.com/download/#linux))
+- Chrome ([chrome](https://www.google.com/chrome))
+- or Chromium for [Windows](https://chromium.woolyss.com/download/#windows), [macOS](https://chromium.woolyss.com/download/#mac), or [Linux](https://chromium.woolyss.com/download/#linux)
 - an Internet connection
 
 <p style="color:red"><b>NEED HELP HERE!</b> What are the minimum Python and Chrome versions we should be requiring?</p>
@@ -33,7 +29,7 @@ Once your system meets the minimum requirements, you can install the various com
 
 The first package you need to install is `ledger-cli`, the command-line based accounting system. This allows the extensions to interact with the Guld ledger.
 
-#### On macOS
+#### ledger-cli installation on macOS
 
 Using the [Brew](https://brew.sh) package manager, run the following command from a Terminal window:
 
@@ -41,13 +37,13 @@ Using the [Brew](https://brew.sh) package manager, run the following command fro
 brew install ledger
 ```
 
-#### On Linux
+#### ledger-cli installation on Linux
 
 The [ledger download page](https://www.ledger-cli.org/download.html) has links to `ledger` versions for several linux distributions.
 
 **Note!** We only support ledger 3.1.1 and later. As of this writing, the *Slackware*, *CentOS*, and *OpenSUSE* packages were out of date, and may not work correctly with our extensions.
 
-#### On Windows
+#### ledger-cli installation on Windows
 
 The [ledger download page](https://www.ledger-cli.org/download.html) has a link to a third-party binary download for Windows. Download and unzip `ledger_3.1.1_win_bin.zip`.
 
@@ -83,13 +79,23 @@ To install the ledger-native bindings on Windows:
 
 1. In an Explorer window, navigate to the `ledger-native` folder.
 
-1. Double-click the `install_host.bat` script to run it.
-
-1. This script installs the native messaging host for the current user, by creating a registry key called `HKEY_CURRENT_USER\SOFTWARE\Google\Chrome\NativeMessagingHosts\com.guld.ledger` and setting its value to the full path to `com.guld.ledger-win.json`.
+1. Double-click the `install_host.bat` script to install the native messaging host for the current Windows user.
 
 ### Install the Chrome extension
 
-Forthcoming...
+The extension will soon be available from the Google Play Store.
+
+To install the extension directly from this Github repository, either download or clone the repository. Then, in Chrome:
+
+1. Navigate to [chrome://extensions/](chrome://extensions/).
+
+1. Turn on Developer Mode with the switch in the upper-right corner.
+
+1. Click the `Load Unpacked` button.
+
+1. Navigate to the location you downloaded or cloned the repository, and click Select.
+
+    The extension's icon will show up on the Chrome toolbar, with a "WAIT" overlay. After a few minutes, the extension will finish its initial setup, and will be ready to use.
 
 #### Extension Setup Steps
 
