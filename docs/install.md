@@ -83,7 +83,7 @@ To install the ledger-native bindings on Windows:
 
 ### Install the Chrome extension
 
-The extension will soon be available from the Google Play Store.
+The extension will soon be available from the Chrome Web Store.
 
 To install the extension directly from this Github repository, either download or clone the repository. Then, in Chrome:
 
@@ -133,11 +133,19 @@ To **generate a new Guld identity** and PGP key:
 
 To **import an existing Guld identity** and PGP key:
 
-> **TODO** it looks like the UI for this one is broken right now. Choosing import doesn't change the UI at all.
-
 1. Select the "import" radio button.
 
-1. ...
+1. Export the private key you used to register your Guld Identity from your preferred PGP key manager
+
+1. Copy and paste the exported private key into the text area labeled ASCII Armored Private Key
+
+1. Enter your existing Guld username
+
+1. Enter the passphrase for the private PGP key.
+    
+1. Click the import button to import your private key and Guld Identity
+
+   **Note** If you get an error when trying to use your existing Guld username, check the "Expert Mode" box and try the import again.
 
 #### Setting up Guld Games
 
