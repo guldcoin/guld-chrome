@@ -141,13 +141,11 @@ To **import an existing Guld identity** and PGP key:
 
 1. Enter your existing Guld username
 
-1. Enter a strong passphrase for the private PGP key, and confirm it.
-
-    Keep your passphrase stored securely! There is no way to recover a lost passphrase.
+1. Enter the passphrase for the private PGP key.
     
 1. Click the import button to import your private key and Guld Identity
 
-   **Note** If you get an error when trying to use your existing Guld username checkmark the Expert Mode (DANGER!) option and try the import again
+   **Note** If you get an error when trying to use your existing Guld username, check the "Expert Mode" box and try the import again.
 
 #### Setting up Guld Games
 
