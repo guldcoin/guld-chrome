@@ -2,7 +2,13 @@
 
 This page describes how to install and set up the GULD Wallet/Guld Games extensions.
 
-In this document, you'll find [prerequisites](#before-you-install), and installation instructions for [ledger-cli](#installing-ledger-cli), [ledger-native](#installing-the-ledger-native-bindings), the [extensions](#installing-the-chrome-extensions) themselves, and [setup instructions](#setting-up-the-chrome-extensions).
+In this document, you'll find:
+
+- [prerequisites](#before-you-install)
+- [installing ledger-cli](#installing-ledger-cli)
+- [installing the ledger-native binding](#installing-the-ledger-native-bindings)
+- [installing the extensions](#installing-the-chrome-extensions)
+- [setting up the extensions](#setting-up-the-chrome-extensions)
 
 ## Before You Install
 
@@ -12,7 +18,7 @@ Currently, these extensions run only on the following operating systems:
 - **Linux** (kernel xxx or later, Ubuntu/Mint/Gentoo recommended)
 - **Windows** 7 or later
 
-<p style="color:red"><b>NEED HELP HERE!</b> What are the minimum OS versions we should be requiring?</p>
+> **NEED HELP HERE!** What are the minimum OS versions we should be requiring?
 
 In addition, you'll need:
 
@@ -21,7 +27,7 @@ In addition, you'll need:
 - **Chrome** ([download](https://www.google.com/chrome)) or **Chromium** ([download](https://chromium.woolyss.com/download/))
 - an Internet connection
 
-<p style="color:red"><b>NEED HELP HERE!</b> What are the minimum Python, Chrome, and Chromium versions we should be requiring?</p>
+> **NEED HELP HERE!** What are the minimum Python, Chrome, and Chromium versions we should be requiring?
 
 ## Installation and Setup
 
@@ -49,7 +55,7 @@ The [ledger download page](https://www.ledger-cli.org/download.html) has links t
 
 The [ledger download page](https://www.ledger-cli.org/download.html) has a link to a third-party binary download for Windows. Download and unzip `ledger_3.1.1_win_bin.zip`.
 
-<p style="color:red"><b>NEED WINDOWS HELP HERE!</b> I'm not sure where the files should go... The binary unzips to a bunch of DLLs and a single executable. Seems like it ought to go into a folder of its own somewhere, but then we need to add instructions on adding that folder to the Windows path so the extension can find it.</p>
+> **NEED WINDOWS HELP HERE!** I'm not sure where the files should go... The binary unzips to a bunch of DLLs and a single executable. Seems like it ought to go into a folder of its own somewhere, but then we need to add instructions on adding that folder to the Windows path so the extension can find it.
 
 ### Installing the ledger-native Bindings
 
