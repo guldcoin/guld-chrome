@@ -6,7 +6,7 @@ In this document, you'll find:
 
 - [prerequisites](#before-you-install)
 - [installing ledger-cli](#installing-ledger-cli)
-- [installing the ledger-native binding](#installing-the-ledger-native-bindings)
+- [installing the ledger-native bindings](#installing-the-ledger-native-bindings)
 - [installing the extensions](#installing-the-chrome-extensions)
 - [setting up the extensions](#setting-up-the-chrome-extensions)
 
