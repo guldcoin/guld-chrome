@@ -52,14 +52,40 @@ The code that directly defines the extension's functionality is in the `/js` fol
 
 `grant.js` provides functionality to grant GG. **Not currently implemented**
 
-`options.js` ...
+`options.js` populates the options page, accessible through the gear icon at the lower left.
 
-`receiveBTC.js` ...
+`receiveBTC.js` populates the balance (and its value in USD) for the selected currency.
 
-`register.js` ...
+`register.js` populates the registration page.
 
-`send.js` ...
+`send.js` populates the Send page for Guld transactions.
 
 ## `/js/vendor` files
 
-This folder contains supporting libraries.
+This folder contains supporting libraries. We are using libraries from the following projects (descriptions are from each project's page):
+
+- [BrowserFS](https://github.com/jvilk/BrowserFS) _is an in-browser filesystem that emulates the Node JS filesystem API and supports storing and retrieving files from various backends._
+
+- [Decimal](https://github.com/MikeMcl/decimal.js) is _An arbitrary-precision Decimal type for JavaScript_.
+
+- [EventEmitter](https://github.com/Olical/EventEmitter) is _Evented JavaScript for the browser_.
+
+- [GitHub.js](http://github-tools.github.io/github/) is _a javascript library that makes it easy to interact with GitHub’s REST API in Node and in the browser._
+
+- [Highland](http://github.com/caolan/highland) is a _high-level streams library._
+
+- Isomorphic-Git is 
+
+- Ledger-CLI
+
+- Odometer
+
+- OpenPGP
+
+- ParaParse
+
+- QRCode
+
+We are also using a pair of libraries from the Guld project: `guld-lib` and `ledger-types`.
+
+> **TODO** What should we link to for the Guld libraries?
